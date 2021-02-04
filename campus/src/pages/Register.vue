@@ -11,8 +11,16 @@
           label-width="100px"
         >
 
-          <el-form-item label="用户名" required>
-            <el-input placeholder="请输入用户名" v-model="username"></el-input>
+          <el-form-item label="姓名" required>
+            <el-input placeholder="请输入姓名" v-model="username"></el-input>
+          </el-form-item>
+
+          <el-form-item label="学号" required>
+            <el-input placeholder="请输入学号" v-model="username"></el-input>
+          </el-form-item>
+
+          <el-form-item label="昵称">
+            <el-input placeholder="请输入昵称" v-model="username"></el-input>
           </el-form-item>
 
           <el-form-item label="密码" required>
@@ -24,13 +32,38 @@
             ></el-input>
           </el-form-item>
 
-          <el-form-item>
-            <el-button type="primary">登录</el-button>
+          <el-form-item label="重复密码" required>
+            <el-input
+              type="password"
+              show-password
+              v-model="password"
+              placeholder="请再次输入密码"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item label="手机号" required>
+            <el-input placeholder="请输入手机号" v-model="username"></el-input>
+          </el-form-item>
+
+          <el-form-item label="性别" required>
+            <el-radio v-model="radio" label="1">备选项</el-radio>
+            <el-radio v-model="radio" label="2">备选项</el-radio>
+          </el-form-item>
+
+          <el-form-item label="宿舍号" required>
+            <el-input placeholder="请输入宿舍号" v-model="username"></el-input>
+          </el-form-item>
+
+          <el-form-item label="班级" required>
+            <el-input placeholder="请输入班级" v-model="username"></el-input>
           </el-form-item>
 
           <el-form-item>
-            <router-link to="/" tag="span" class="login_wrap_bottom_item">忘记密码</router-link>
-            <router-link to="/" tag="span" class="login_wrap_bottom_item">立即注册</router-link>
+            <el-button type="primary">注册</el-button>
+          </el-form-item>
+
+          <el-form-item>
+            <router-link to="/login" tag="span" class="login_wrap_bottom_item">去登录</router-link>
           </el-form-item>
 
         </el-form>
@@ -45,7 +78,8 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      radio: '1'
     }
   },
   components: {
@@ -57,8 +91,9 @@ export default {
 <style lang="less" scoped>
 .login {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f4f1f1;
+  padding-bottom: 30px;
   .head {
     height: 165px;
     padding-left: 35px;
@@ -79,10 +114,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 120px;
     .login_wrap {
       width: 600px;
-      height: 430px;
       border: 1px solid #ccc;
       border-radius: 14px;
       background-color: #fff;
@@ -91,7 +124,7 @@ export default {
       align-items: center;
       .el-form{
         width: 70%;
-        padding-top: 30px;
+        padding-top: 50px;
         .el-form-item{
           margin-bottom: 30px;
           .login_wrap_bottom_item{

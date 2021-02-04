@@ -23,8 +23,18 @@
       </div>
     </div>
     <div class="header_mobile hidden-sm-and-up">
-      <el-image :src="src" class="logo_mobile"></el-image>
-      <span class="logo_mobile_txt">资源共享平台</span>
+      <div class="header_mobile_left">
+        <el-image :src="src" class="logo_mobile"></el-image>
+        <span class="logo_mobile_txt">资源共享平台</span>
+      </div>
+      <div class="header_mobile_right">
+        <router-link to="/login" class="login_link" tag="span"
+          >[登录]</router-link
+        >
+        <router-link to="/register" class="login_link" tag="span"
+          >[注册]</router-link
+        >
+      </div>
     </div>
     <Nav></Nav>
 
@@ -477,6 +487,8 @@
       <div class="empty_line"></div>
       <p>豫ICP备20006661号</p>
     </footer>
+
+
   </div>
 </template>
 
@@ -549,16 +561,29 @@ export default {
     padding-right: 20px;
     box-sizing: border-box;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    .logo_mobile {
-      width: 65px;
-      height: 65px;
-      margin-right: 10px;
+    .header_mobile_left {
+      display: flex;
+      align-items: center;
+      .logo_mobile {
+        width: 65px;
+        height: 65px;
+        margin-right: 10px;
+      }
+      .logo_mobile_txt {
+        font-size: 17px;
+        color: #cc5e60;
+        font-weight: 550;
+      }
     }
-    .logo_mobile_txt {
-      font-size: 17px;
-      color: #cc5e60;
-      font-weight: 550;
+    .header_mobile_right{
+      .login_link{
+        color: #666;
+        font-size: 16px;
+        margin-right: 20px;
+        cursor: pointer;
+      }
     }
   }
   .content {
@@ -573,6 +598,12 @@ export default {
       background-color: #bbc1b1;
       box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
       border-radius: 4px;
+      padding-top: 20px;
+      padding-bottom: 30px;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
       .message_card_head {
         height: 42px;
         display: flex;
@@ -580,14 +611,10 @@ export default {
         align-items: center;
       }
       .message_card_body {
-        padding-right: 50px;
-        padding-bottom: 20px;
-        box-sizing: border-box;
         color: #333;
         .card_list_item {
           margin: 8px 0;
           .card_list_item_title {
-            width: 70%;
             display: inline-block;
             text-align: right;
           }
@@ -607,6 +634,10 @@ export default {
       border-radius: 4px;
       margin-top: 40px;
       margin-bottom: 40px;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
       .message_card_head {
         height: 42px;
         display: flex;
@@ -617,6 +648,7 @@ export default {
         padding-left: 25px;
         padding-right: 20px;
         padding-bottom: 20px;
+        max-width: 70%;
         li {
           margin: 10px 0;
           white-space: nowrap;
@@ -627,6 +659,7 @@ export default {
       }
     }
     .content_main {
+      width: 100%;
       .content_main_title {
         height: 60px;
         background-color: #bbc1b1;
@@ -651,7 +684,7 @@ export default {
         margin-bottom: 30px;
         .zone_item {
           // width: 430px;
-          max-width: 100%;
+          width: 48%;
           margin-top: 20px;
           .zone_item_title {
             height: 36px;
@@ -703,11 +736,16 @@ export default {
               cursor: pointer;
               line-height: 34px;
               display: flex;
+              flex-flow: row nowrap;
               align-items: center;
+              justify-content: space-between;
+              :hover{
+                color: #448bdc;
+              }
               .news_name {
-                // width: 280px;
                 display: flex;
                 align-items: center;
+                width: 78%;
                 .circle {
                   width: 12px;
                   height: 12px;
@@ -715,7 +753,6 @@ export default {
                   border-radius: 50%;
                 }
                 span {
-                  max-width: 250px;
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
@@ -723,7 +760,11 @@ export default {
                 }
               }
               .news_date {
-                width: 105px;
+                width: 20%;
+                margin-left: 2%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
               }
             }
           }
