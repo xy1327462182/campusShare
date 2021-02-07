@@ -9,16 +9,18 @@
       class="hidden-xs-only"
     >
       <el-menu-item index="/">首页</el-menu-item>
-      <el-menu-item index="/login">发布信息</el-menu-item>
-      <el-submenu index="3">
+      <el-menu-item index="/publish">发布信息</el-menu-item>
+      <el-submenu index="1">
         <template slot="title">信息分类</template>
-        <el-menu-item>学习专区</el-menu-item>
-        <el-menu-item>生活专区</el-menu-item>
-        <el-menu-item>娱乐专区</el-menu-item>
-        <el-menu-item>其他</el-menu-item>
+        <el-menu-item index="/more?current=study">学习专区</el-menu-item>
+        <el-menu-item index="/more?current=daily">生活专区</el-menu-item>
+        <el-menu-item index="/more?current=entertainment"
+          >娱乐专区</el-menu-item
+        >
+        <el-menu-item index="/more?current=others">其他</el-menu-item>
       </el-submenu>
-      <el-menu-item index="/login">平台公告</el-menu-item>
-      <el-menu-item index="/login">我的发布</el-menu-item>
+      <el-menu-item index="/notice">平台公告</el-menu-item>
+      <el-menu-item index="/published">我的发布</el-menu-item>
     </el-menu>
 
     <el-dropdown trigger="click">
@@ -26,49 +28,34 @@
         <i class="el-icon-menu"></i>
       </el-button>
       <el-dropdown-menu slot="dropdown">
-        <el-menu>
-          <router-link to="/login">
-            <el-menu-item>
-              <i class="el-icon-mobile-phone"></i>
-              <span slot="title">首页</span>
-            </el-menu-item>
-          </router-link>
-          <router-link to="/login">
-            <el-menu-item>
-              <i class="el-icon-edit"></i>
-              <span slot="title">发布信息</span>
-            </el-menu-item>
-          </router-link>
-          <el-submenu index="1">
+        <el-menu :router="true">
+          <el-menu-item index="/">
+            <i class="el-icon-mobile-phone"></i>
+            <span slot="title">首页</span>
+          </el-menu-item>
+          <el-menu-item index="/publish">
+            <i class="el-icon-edit"></i>
+            <span slot="title">发布信息</span>
+          </el-menu-item>
+          <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-coin"></i>
               <span>信息分类</span>
             </template>
-            <el-menu-item-group>
-              <el-menu-item>学习专区</el-menu-item>
-              <el-menu-item>生活专区</el-menu-item>
-              <el-menu-item>娱乐专区</el-menu-item>
-              <el-menu-item>其他</el-menu-item>
-            </el-menu-item-group>
+            <el-menu-item index="/more?current=study">学习专区</el-menu-item>
+            <el-menu-item index="/more?current=daily">生活专区</el-menu-item>
+            <el-menu-item index="/more?current=entertainment">娱乐专区</el-menu-item>
+            <el-menu-item index="/more?current=others">其他</el-menu-item>
           </el-submenu>
-          <router-link to="/login">
-            <el-menu-item>
-              <i class="el-icon-chat-dot-square"></i>
-              <span slot="title">平台公告</span>
-            </el-menu-item>
-          </router-link>
-          <router-link to="/login">
-            <el-menu-item>
-              <i class="el-icon-time"></i>
-              <span slot="title">我的发布</span>
-            </el-menu-item>
-          </router-link>
+          <el-menu-item index="/notice">
+            <i class="el-icon-chat-dot-square"></i>
+            <span slot="title">平台公告</span>
+          </el-menu-item>
+          <el-menu-item index="/published">
+            <i class="el-icon-time"></i>
+            <span slot="title">我的发布</span>
+          </el-menu-item>
         </el-menu>
-        <!-- <el-dropdown-item>首页</el-dropdown-item>
-        <el-dropdown-item>发布信息</el-dropdown-item>
-        <el-dropdown-item>信息分类</el-dropdown-item>
-        <el-dropdown-item>平台公告</el-dropdown-item>
-        <el-dropdown-item>我的发布</el-dropdown-item> -->
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -79,11 +66,7 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -114,7 +97,7 @@ export default {
         font-size: 22px;
       }
     }
-    .el-dropdown-menu{
+    .el-dropdown-menu {
     }
   }
 }

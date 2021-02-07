@@ -1,41 +1,6 @@
 <template>
   <div class="home">
-    <div class="header hidden-xs-only">
-      <div class="top_bar">
-        <el-row>
-          <el-col :xs="24" :sm="16" :md="10" :lg="10">
-            <Logo></Logo>
-          </el-col>
-          <el-col :md="8" :lg="8" class="hidden-sm-and-down">
-            <div class="search_wrap">
-              <el-input placeholder="搜索" prefix-icon="el-icon-search">
-              </el-input>
-              <el-button type="primary">搜索</el-button>
-            </div>
-          </el-col>
-          <el-col :sm="8" :md="6" :lg="6" class="hidden-xs-only">
-            <div class="login_wrap">
-              <router-link to="/login" class="login_link">[登录]</router-link>
-              <router-link to="/login" class="login_link">[注册]</router-link>
-            </div>
-          </el-col>
-        </el-row>
-      </div>
-    </div>
-    <div class="header_mobile hidden-sm-and-up">
-      <div class="header_mobile_left">
-        <el-image :src="src" class="logo_mobile"></el-image>
-        <span class="logo_mobile_txt">资源共享平台</span>
-      </div>
-      <div class="header_mobile_right">
-        <router-link to="/login" class="login_link" tag="span"
-          >[登录]</router-link
-        >
-        <router-link to="/register" class="login_link" tag="span"
-          >[注册]</router-link
-        >
-      </div>
-    </div>
+    <Head></Head>
     <Nav></Nav>
 
     <div class="content">
@@ -47,15 +12,15 @@
               <div class="message_card_body">
                 <div class="card_list_item">
                   <span class="card_list_item_title">今日浏览:</span
-                  ><span class="card_list_item_data">900</span>
+                  ><span class="card_list_item_data">{{siteCountInfo.views}}</span>
                 </div>
                 <div class="card_list_item">
                   <span class="card_list_item_title">帖子:</span
-                  ><span class="card_list_item_data">9020</span>
+                  ><span class="card_list_item_data">{{siteCountInfo.posts}}</span>
                 </div>
                 <div class="card_list_item">
                   <span class="card_list_item_title">会员:</span
-                  ><span class="card_list_item_data">90</span>
+                  ><span class="card_list_item_data">{{siteCountInfo.members}}</span>
                 </div>
               </div>
             </div>
@@ -64,11 +29,16 @@
               <div class="message_card_head">TOP排行</div>
               <div class="order_card_body">
                 <ul>
-                  <li>
-                    1.阿萨德阿萨德安阿萨德阿萨德奥德赛阿萨德阿萨德阿萨的抚
-                  </li>
-                  <li>2.阿德安抚</li>
-                  <li>3.啊啊开口安抚</li>
+                  <router-link 
+                    
+                    tag="li" 
+                    class="list_item"
+                    v-for="(item,index) in orderInfo.list"
+                    :key="index"
+                    :to="'/detail?id=' + item.id" 
+                  >
+                    {{index+1}}.{{item.name}}
+                  </router-link>
                 </ul>
               </div>
             </div>
@@ -81,13 +51,14 @@
               <p class="title_txt">本周推荐</p>
             </div>
             <div class="content_main_list">
-              <div class="zone_item">
+
+              <div class="zone_item" v-for="item in zoneInfo.list" :key="item.typeid">
                 <div class="zone_item_title">
                   <div class="zone_item_name_wrap">
-                    <h4>学习专区</h4>
-                    <span>study</span>
+                    <h4>{{item.typename}}</h4>
+                    <span class="hidden-xs-only">{{item.typeid}}</span>
                   </div>
-                  <div class="zone_item_more_wrap">
+                  <div class="zone_item_more_wrap" @click="goOthers(item.typeid)">
                     <span class="more_line"></span>
                     <i class="el-icon-caret-right"></i>
                     <span class="more_txt">more</span>
@@ -95,39 +66,22 @@
                 </div>
                 <div class="zone_item_content">
                   <router-link
-                    to="/login"
                     class="zone_item_content_list_item"
                     tag="div"
+                    v-for="post in item.items"
+                    :key="post.id"
+                    :to="'/detail?id=' + post.id"
                   >
                     <div class="news_name">
                       <div class="circle"></div>
-                      <span
-                        >但是 沙发斯蒂芬 防守打法撒旦法 但是asf sf s sf aa af
-                        affaf fsf sf</span
-                      >
+                      <span>{{post.title}}</span>
                     </div>
                     <div class="news_date">
-                      <span>(2020-12-90)</span>
-                    </div>
-                  </router-link>
-                  <router-link
-                    to="/login"
-                    class="zone_item_content_list_item"
-                    tag="div"
-                  >
-                    <div class="news_name">
-                      <div class="circle"></div>
-                      <span
-                        >但是 沙发斯蒂芬 防守打法撒旦法 但是asf sf s sf aa af
-                        affaf fsf sf</span
-                      >
-                    </div>
-                    <div class="news_date">
-                      <span>(2020-12-90)</span>
+                      <span>{{post.create_time}}</span>
                     </div>
                   </router-link>
 
-                  <router-link
+                  <!-- <router-link
                     to="/login"
                     class="zone_item_content_list_item"
                     tag="div"
@@ -142,49 +96,16 @@
                     <div class="news_date">
                       <span>(2020-12-90)</span>
                     </div>
-                  </router-link>
+                  </router-link> -->
 
-                  <router-link
-                    to="/login"
-                    class="zone_item_content_list_item"
-                    tag="div"
-                  >
-                    <div class="news_name">
-                      <div class="circle"></div>
-                      <span
-                        >但是 沙发斯蒂芬 防守打法撒旦法 但是asf sf s sf aa af
-                        affaf fsf sf</span
-                      >
-                    </div>
-                    <div class="news_date">
-                      <span>(2020-12-90)</span>
-                    </div>
-                  </router-link>
-
-                  <router-link
-                    to="/login"
-                    class="zone_item_content_list_item"
-                    tag="div"
-                  >
-                    <div class="news_name">
-                      <div class="circle"></div>
-                      <span
-                        >但是 沙发斯蒂芬 防守打法撒旦法 但是asf sf s sf aa af
-                        affaf fsf sf</span
-                      >
-                    </div>
-                    <div class="news_date">
-                      <span>(2020-12-90)</span>
-                    </div>
-                  </router-link>
                 </div>
               </div>
 
-              <div class="zone_item">
+              <!-- <div class="zone_item">
                 <div class="zone_item_title">
                   <div class="zone_item_name_wrap">
                     <h4>生活专区</h4>
-                    <span>daily</span>
+                    <span class="hidden-xs-only">daily</span>
                   </div>
                   <div class="zone_item_more_wrap">
                     <span class="more_line"></span>
@@ -277,13 +198,13 @@
                     </div>
                   </router-link>
                 </div>
-              </div>
+              </div> -->
 
-              <div class="zone_item">
+              <!-- <div class="zone_item">
                 <div class="zone_item_title">
                   <div class="zone_item_name_wrap">
                     <h4>娱乐专区</h4>
-                    <span>entertainment</span>
+                    <span class="hidden-xs-only">entertainment</span>
                   </div>
                   <div class="zone_item_more_wrap">
                     <span class="more_line"></span>
@@ -376,13 +297,13 @@
                     </div>
                   </router-link>
                 </div>
-              </div>
+              </div> -->
 
-              <div class="zone_item">
+              <!-- <div class="zone_item">
                 <div class="zone_item_title">
                   <div class="zone_item_name_wrap">
                     <h4>其他</h4>
-                    <span>others</span>
+                    <span class="hidden-xs-only">others</span>
                   </div>
                   <div class="zone_item_more_wrap">
                     <span class="more_line"></span>
@@ -475,117 +396,228 @@
                     </div>
                   </router-link>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </el-col>
       </el-row>
     </div>
 
-    <footer>
-      <p>©2021 HuangZhen.All rights reserved.</p>
-      <div class="empty_line"></div>
-      <p>豫ICP备20006661号</p>
-    </footer>
-
+    <Footer></Footer>
 
   </div>
 </template>
 
 <script>
-import src from "@/assets/logo.png";
-import Logo from "../components/Logo";
+
+import Head from "../components/Head";
 import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 export default {
   name: "Home",
   data() {
     return {
-      src: src,
+      siteCountInfo: {},//站内信息
+      orderInfo: {},//排行信息
+      zoneInfo: {},//专区信息
     };
   },
   components: {
-    Logo,
+    Head,
     Nav,
+    Footer,
   },
   methods: {
-    asd() {
-      this.$router.push({
-        path: "/login",
-      });
+    //获取信息数据
+    getData() {
+      if (!this.siteCountInfo.members) {
+        //发送请求 获取站内统计信息
+        //axios...
+        //此处模拟数据
+        this.siteCountInfo = {
+          members: 899,
+          posts: 1909,
+          views: 12423
+        }
+      }
+      if (!this.orderInfo.list) {
+        //发送请求 获取排行信息
+        //axios...
+        //此处模拟数据
+        this.orderInfo = {
+          list: [
+          {
+            id: '1212313',
+            name: '求购考研资料'
+          },
+          {
+            id: '25345354',
+            name: '求黑马程序员java'
+          },
+          {
+            id: '2534zdfs5354',
+            name: '求数据可设局'
+          },
+          {
+            id: 'asd34zdfs5354',
+            name: '出手机iphone'
+          },
+        ]}
+      }
+      if (!this.zoneInfo.list) {
+        //发送请求 获取排行信息
+        //axios...
+        //此处模拟数据
+        this.zoneInfo = {
+          list: [
+            {
+              typeid: 'study',
+              typename: '学习专区',
+              items: [
+                {
+                  id:'asdwaserwdasasasDxsvfsrfvsrfs',
+                  title:'黑马java教程',
+                  create_time: '2020-02-02'
+                },
+                {
+                  id:'asderwdasasasDxsvfsrfvsrfs',
+                  title:'黑马php教程',
+                  create_time: '2020-02-03'
+                },
+                {
+                  id:'123derwdasasasDxsvfsrfvsrfs',
+                  title:'课堂前端视频资源',
+                  create_time: '2020-02-03'
+                },
+                {
+                  id:'7809873derwdasasasDxsvfsrfvsrfs',
+                  title:'张宇考研真题',
+                  create_time: '2020-02-04'
+                },
+                {
+                  id:'azzx09873derwdasasasDxsvfsrfvsrfs',
+                  title:'数学政治考研',
+                  create_time: '2020-02-04'
+                },
+              ]
+            },
+            {
+              typeid: 'daily',
+              typename: '生活专区',
+              items: [
+                {
+                  id:'asdwaserwdasasasDxsvfsrfvsrfs',
+                  title:'黑马java教程',
+                  create_time: '2020-02-02'
+                },
+                {
+                  id:'asderwdasasasDxsvfsrfvsrfs',
+                  title:'黑马php教程',
+                  create_time: '2020-02-03'
+                },
+                {
+                  id:'123derwdasasasDxsvfsrfvsrfs',
+                  title:'课堂前端视频资源',
+                  create_time: '2020-02-03'
+                },
+                {
+                  id:'7809873derwdasasasDxsvfsrfvsrfs',
+                  title:'张宇考研真题',
+                  create_time: '2020-02-04'
+                },
+                {
+                  id:'azzx09873derwdasasasDxsvfsrfvsrfs',
+                  title:'数学政治考研',
+                  create_time: '2020-02-04'
+                },
+              ]
+            },
+            {
+              typeid: 'entertainment',
+              typename: '娱乐专区',
+              items: [
+                {
+                  id:'asdwaserwdasasasDxsvfsrfvsrfs',
+                  title:'黑马java教程',
+                  create_time: '2020-02-02'
+                },
+                {
+                  id:'asderwdasasasDxsvfsrfvsrfs',
+                  title:'黑马php教程',
+                  create_time: '2020-02-03'
+                },
+                {
+                  id:'123derwdasasasDxsvfsrfvsrfs',
+                  title:'课堂前端视频资源',
+                  create_time: '2020-02-03'
+                },
+                {
+                  id:'7809873derwdasasasDxsvfsrfvsrfs',
+                  title:'张宇考研真题',
+                  create_time: '2020-02-04'
+                },
+                {
+                  id:'azzx09873derwdasasasDxsvfsrfvsrfs',
+                  title:'数学政治考研',
+                  create_time: '2020-02-04'
+                },
+              ]
+            },
+            {
+              typeid: 'others',
+              typename: '其他',
+              items: [
+                {
+                  id:'asdwaserwdasasasDxsvfsrfvsrfs',
+                  title:'黑马java教程',
+                  create_time: '2020-02-02'
+                },
+                {
+                  id:'asderwdasasasDxsvfsrfvsrfs',
+                  title:'黑马php教程',
+                  create_time: '2020-02-03'
+                },
+                {
+                  id:'123derwdasasasDxsvfsrfvsrfs',
+                  title:'课堂前端视频资源',
+                  create_time: '2020-02-03'
+                },
+                {
+                  id:'7809873derwdasasasDxsvfsrfvsrfs',
+                  title:'张宇考研真题',
+                  create_time: '2020-02-04'
+                },
+                {
+                  id:'azzx09873derwdasasasDxsvfsrfvsrfs',
+                  title:'数学政治考研',
+                  create_time: '2020-02-04'
+                },
+              ]
+            }
+          ]
+        }
+      }
     },
+    //去更多页
+    goOthers(id) {
+      this.$router.push({
+        path: '/more',
+        query: {
+          id: id
+        }
+      })
+    }
   },
+  mounted() {
+    //获取信息数据
+    this.getData()
+  }
 };
 </script>
 
 <style lang="less" scoped>
 .home {
-  .header {
-    height: 165px;
-    background-color: #bbc1b1;
-    .top_bar {
-      height: 165px;
-      padding-left: 35px;
-      padding-right: 35px;
-      .search_wrap {
-        height: 165px;
-        padding-bottom: 16px;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-        .el-button {
-          background-color: #a75422;
-          border-color: #a3d0fd;
-          margin-left: 20px;
-        }
-      }
-      .login_wrap {
-        height: 165px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        .login_link {
-          color: #666;
-          font-size: 16px;
-          margin-right: 20px;
-        }
-      }
-    }
-  }
-  .header_mobile {
-    width: 100%;
-    height: 70px;
-    background-color: #bbc1b1;
-    padding-left: 20px;
-    padding-right: 20px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .header_mobile_left {
-      display: flex;
-      align-items: center;
-      .logo_mobile {
-        width: 65px;
-        height: 65px;
-        margin-right: 10px;
-      }
-      .logo_mobile_txt {
-        font-size: 17px;
-        color: #cc5e60;
-        font-weight: 550;
-      }
-    }
-    .header_mobile_right{
-      .login_link{
-        color: #666;
-        font-size: 16px;
-        margin-right: 20px;
-        cursor: pointer;
-      }
-    }
-  }
   .content {
     padding-left: 15px;
     padding-right: 15px;
@@ -649,12 +681,16 @@ export default {
         padding-right: 20px;
         padding-bottom: 20px;
         max-width: 70%;
-        li {
+        .list_item {
           margin: 10px 0;
           white-space: nowrap;
           width: 100%;
           overflow: hidden;
           text-overflow: ellipsis;
+          cursor: pointer;
+          &:hover{
+            color: #448bdc;
+          }
         }
       }
     }
@@ -731,7 +767,7 @@ export default {
           .zone_item_content {
             border: 1px solid #ccc;
             border-radius: 12px;
-            padding: 20px 24px;
+            padding: 20px;
             .zone_item_content_list_item {
               cursor: pointer;
               line-height: 34px;
@@ -745,7 +781,7 @@ export default {
               .news_name {
                 display: flex;
                 align-items: center;
-                width: 78%;
+                width: 74%;
                 .circle {
                   width: 12px;
                   height: 12px;
@@ -756,11 +792,11 @@ export default {
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                  margin-left: 10px;
+                  margin-left: 8px;
                 }
               }
               .news_date {
-                width: 20%;
+                width: 25%;
                 margin-left: 2%;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -772,20 +808,6 @@ export default {
       }
     }
   }
-  footer {
-    width: 100%;
-    height: 90px;
-    background-color: #ebede9;
-    font-size: 14px;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    .empty_line {
-      height: 10px;
-    }
-  }
+  
 }
 </style>
